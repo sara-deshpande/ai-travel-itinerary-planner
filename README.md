@@ -1,4 +1,3 @@
-# ai-travel-itinerary-planner
 # AI Travel Itinerary Planner
 
 A full-stack web application that generates personalized day-by-day travel itineraries using the OpenAI API.

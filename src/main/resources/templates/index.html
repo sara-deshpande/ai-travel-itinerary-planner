@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>AI Travel Itinerary Builder</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fff8f0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 24px;
+            padding: 45px 40px;
+            max-width: 580px;
+            width: 100%;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            border-top: 5px solid #ff6b6b;
+        }
+
+        .emoji-header {
+            font-size: 48px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 1.8rem;
+            color: #ff6b6b;
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #aaa;
+            margin-bottom: 32px;
+            font-size: 0.95rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #444;
+            font-size: 0.95rem;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 13px 16px;
+            border: 2px solid #f0f0f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            outline: none;
+            color: #333;
+            background: #fafafa;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus {
+            border-color: #ff6b6b;
+            background: white;
+        }
+
+        .interests-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .interest-chip {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 8px;
+            border: 2px solid #f0f0f0;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.2s;
+            background: #fafafa;
+            text-align: center;
+        }
+
+        .interest-chip:hover {
+            border-color: #feca57;
+            background: #fffdf0;
+        }
+
+        .interest-chip.selected {
+            border-color: #ff6b6b;
+            background: #fff5f5;
+            color: #ff6b6b;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 12px;
+            transition: background 0.2s, transform 0.2s;
+            letter-spacing: 0.3px;
+        }
+
+        .submit-btn:hover {
+            background: #ff5252;
+            transform: translateY(-1px);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="emoji-header">✈️</div>
+    <h1>AI Travel Planner</h1>
+    <p class="subtitle">Tell us your dream trip and we'll plan it for you!</p>
+
+    <form action="/generate" method="post" onsubmit="collectInterests()">
+
+        <div class="form-group">
+            <label>📍 Destination</label>
+            <input type="text" name="destination" placeholder="e.g. Paris, Tokyo, New York..." required />
+        </div>
+
+        <div class="form-group">
+            <label>📅 Number of Days</label>
+            <input type="number" name="days" min="1" max="14" value="3" required />
+        </div>
+
+        <div class="form-group">
+            <label>🎯 Your Interests</label>
+            <div class="interests-grid">
+                <div class="interest-chip" onclick="toggleChip(this, '🍜 Food')">🍜 Food</div>
+                <div class="interest-chip" onclick="toggleChip(this, '🏛️ Culture')">🏛️ Culture</div>
+                <div class="interest-chip" onclick="toggleChip(this, '🏔️ Adventure')">🏔️ Adventure</div>
+                <div class="interest-chip" onclick="toggleChip(this, '🛍️ Shopping')">🛍️ Shopping</div>
+                <div class="interest-chip" onclick="toggleChip(this, '🎵 Nightlife')">🎵 Nightlife</div>
+                <div class="interest-chip" onclick="toggleChip(this, '🏖️ Beach')">🏖️ Beach</div>
+                <div class="interest-chip" onclick="toggleChip(this, '📸 Photography')">📸 Photography</div>
+                <div class="interest-chip" onclick="toggleChip(this, '🌿 Nature')">🌿 Nature</div>
+                <div class="interest-chip" onclick="toggleChip(this, '🏛️ Museums')">🏛️ Museums</div>
+            </div>
+            <input type="hidden" name="interests" id="interestsInput" />
+        </div>
+
+        <button type="submit" class="submit-btn">🗺️ Generate My Itinerary</button>
+
+    </form>
+</div>
+
+<script>
+    let selectedInterests = [];
+
+    function toggleChip(chip, value) {
+        if (chip.classList.contains('selected')) {
+            chip.classList.remove('selected');
+            selectedInterests = selectedInterests.filter(i => i !== value);
+        } else {
+            chip.classList.add('selected');
+            selectedInterests.push(value);
+        }
+    }
+
+    function collectInterests() {
+        document.getElementById('interestsInput').value = selectedInterests.join(', ');
+    }
+</script>
+
+</body>
+</html>

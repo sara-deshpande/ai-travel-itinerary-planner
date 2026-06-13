@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Your Itinerary</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fff8f0;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .header-card {
+            background: white;
+            border-radius: 24px;
+            padding: 35px 40px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            text-align: center;
+            border-top: 5px solid #ff6b6b;
+        }
+
+        .emoji-header {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: #ff6b6b;
+            margin-bottom: 16px;
+        }
+
+        .trip-details {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .detail-badge {
+            padding: 7px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.88rem;
+        }
+
+        .badge-orange {
+            background: #fff3e0;
+            color: #e67e22;
+            border: 2px solid #feca57;
+        }
+
+        .badge-pink {
+            background: #fef0fb;
+            color: #e056b8;
+            border: 2px solid #ff9ff3;
+        }
+
+        .badge-blue {
+            background: #e8f8fd;
+            color: #0abde3;
+            border: 2px solid #48dbfb;
+        }
+
+        .itinerary-card {
+            background: white;
+            border-radius: 24px;
+            padding: 35px 40px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+            border-left: 5px solid #feca57;
+        }
+
+        .itinerary-card h2 {
+            color: #444;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .itinerary-text {
+            white-space: pre-wrap;
+            line-height: 1.9;
+            color: #555;
+            font-size: 0.97rem;
+        }
+
+        .back-btn {
+            display: block;
+            text-align: center;
+            padding: 15px;
+            background: #ff6b6b;
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .back-btn:hover {
+            background: #ff5252;
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="header-card">
+        <div class="emoji-header">🗺️</div>
+        <h1 th:text="'Your Trip to ' + ${destination}">Your Itinerary</h1>
+        <div class="trip-details">
+            <span class="detail-badge badge-orange" th:text="${days} + ' Days'">Days</span>
+            <span class="detail-badge badge-pink" th:text="${interests}">Interests</span>
+            <span class="detail-badge badge-blue">AI Generated ✨</span>
+        </div>
+    </div>
+
+    <div class="itinerary-card">
+        <h2>📋 Your Personalized Itinerary</h2>
+        <div class="itinerary-text" th:text="${itinerary}"></div>
+    </div>
+
+    <a href="/" class="back-btn">✈️ Plan Another Trip</a>
+
+</div>
+
+</body>
+</html>

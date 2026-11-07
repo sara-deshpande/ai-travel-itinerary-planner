@@ -10,8 +10,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class TravelController {
 
-    @Autowired
-    private OpenAIService openAIService;
+    private final OpenAIService openAIService;
+
+    public TravelController(OpenAIService openAIService) {
+    this.openAIService = openAIService;
+}
 
     // Shows the home page with the form
     @GetMapping("/")
@@ -35,6 +38,7 @@ public class TravelController {
         model.addAttribute("destination", destination);
         model.addAttribute("days", days);
         model.addAttribute("itinerary", itinerary);
+        model.addAttribute("interests", interests);
 
         return "result";
     }

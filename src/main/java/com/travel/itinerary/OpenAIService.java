@@ -19,6 +19,9 @@ public class OpenAIService {
     @Value("${openai.api.url}")
     private String apiUrl;
 
+    @Value("${openai.model}")
+    private String model;
+
     public String generateItinerary(String destination, int days, String interests) {
 
         String prompt = "Create a detailed day-by-day travel itinerary for a " + days +
@@ -34,9 +37,9 @@ public class OpenAIService {
         messages.put(message);
 
         JSONObject requestBody = new JSONObject();
-        requestBody.put("model", "gpt-3.5-turbo");
+        requestBody.put("model", model);
         requestBody.put("messages", messages);
-        requestBody.put("max_tokens", 1500);
+        requestBody.put("max_completion_tokens", 1500);
 
         try {
             HttpClient client = HttpClient.newHttpClient();
@@ -49,11 +52,6 @@ public class OpenAIService {
 
             HttpResponse<String> response = client.send(request,
                     HttpResponse.BodyHandlers.ofString());
-
-            // Print raw response to console
-            System.out.println("=== RAW API RESPONSE ===");
-            System.out.println(response.body());
-            System.out.println("========================");
 
             JSONObject responseJson = new JSONObject(response.body());
 

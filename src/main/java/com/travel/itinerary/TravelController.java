@@ -38,6 +38,21 @@ public class TravelController {
 
         System.out.println("Received request for: " + destination + ", " + days + " days, interests: " + interests);
 
+        Map<String, String> errors = new HashMap<>();
+        if (destination == null || destination.trim().length() < 2 || destination.trim().length() > 80) {
+            errors.put("destination", "Enter a destination between 2 and 80 characters.");
+        }
+        if (days < 1 || days > 14) {
+            errors.put("days", "Choose between 1 and 14 days.");
+        }
+        if (!errors.isEmpty()) {
+            model.addAttribute("errors", errors);
+            model.addAttribute("destination", destination);
+            model.addAttribute("days", days);
+            model.addAttribute("interests", interests);
+            return "index";
+        }
+        
         String itineraryText;
         try {
             Itinerary itinerary = openAIService.generateItinerary(destination, days, interests);

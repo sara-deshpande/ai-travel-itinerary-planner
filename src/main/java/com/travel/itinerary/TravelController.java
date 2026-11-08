@@ -17,10 +17,12 @@ public class TravelController {
     private static final Logger log = LoggerFactory.getLogger(TravelController.class);
 
     private final OpenAIService openAIService;
+    private final PlaceChecker placeChecker;
 
-    public TravelController(OpenAIService openAIService) {
-    this.openAIService = openAIService;
-}
+    public TravelController(OpenAIService openAIService, PlaceChecker placeChecker) {
+        this.openAIService = openAIService;
+        this.placeChecker = placeChecker;
+    }
 
     // Shows the home page with the form
     @GetMapping("/")
@@ -41,6 +43,8 @@ public class TravelController {
         Map<String, String> errors = new HashMap<>();
         if (destination == null || destination.trim().length() < 2 || destination.trim().length() > 80) {
             errors.put("destination", "Enter a destination between 2 and 80 characters.");
+        } else if (!placeChecker.isRealPlace(destination)) {
+            errors.put("destination", "We could not find that place. Try a real city or country.");
         }
         if (days < 1 || days > 14) {
             errors.put("days", "Choose between 1 and 14 days.");

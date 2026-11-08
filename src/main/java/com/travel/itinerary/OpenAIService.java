@@ -9,6 +9,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.Duration;
 
 @Service
 public class OpenAIService {
@@ -68,9 +69,12 @@ public class OpenAIService {
             requestBody.put("response_format", ItinerarySchema.responseFormat());
     
             try {
-                HttpClient client = HttpClient.newHttpClient();
+                HttpClient client = HttpClient.newBuilder()
+                    .connectTimeout(Duration.ofSeconds(10))
+                    .build();
                 HttpRequest request = HttpRequest.newBuilder()
                         .uri(URI.create(apiUrl))
+                        .timeout(Duration.ofSeconds(60))
                         .header("Content-Type", "application/json")
                         .header("Authorization", "Bearer " + apiKey)
                         .POST(HttpRequest.BodyPublishers.ofString(requestBody.toString()))

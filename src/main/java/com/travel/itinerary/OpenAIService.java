@@ -48,7 +48,7 @@ public class OpenAIService {
 
             String userPrompt = "Destination: " + clean(destination, 80) + "\n"
                     + "Days: " + days + "\n"
-                    + "Interests: " + clean(interests, 200);
+                    + "Interests: " + (interests == null || interests.isBlank() ? "none given, so include a mix of popular highlights" : clean(interests, 200));
     
             JSONObject systemMessage = new JSONObject();
             systemMessage.put("role", "system");

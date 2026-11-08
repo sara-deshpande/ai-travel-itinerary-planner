@@ -32,12 +32,17 @@ public class TravelController {
 
         System.out.println("Received request for: " + destination + ", " + days + " days, interests: " + interests);
 
-        String itinerary = openAIService.generateItinerary(destination, days, interests);
+        String itineraryText;
+        try {
+            Itinerary itinerary = openAIService.generateItinerary(destination, days, interests);
+            itineraryText = itinerary.toPlainText();
+        } catch (Exception e) {
+            itineraryText = "Something went wrong: " + e.getMessage();
+        }
 
-        // Pass data to the result page
+        model.addAttribute("itinerary", itineraryText);
         model.addAttribute("destination", destination);
         model.addAttribute("days", days);
-        model.addAttribute("itinerary", itinerary);
         model.addAttribute("interests", interests);
 
         return "result";

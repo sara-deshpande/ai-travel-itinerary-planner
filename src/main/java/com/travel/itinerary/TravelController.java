@@ -6,9 +6,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Controller
 public class TravelController {
+
+    private static final Logger log = LoggerFactory.getLogger(TravelController.class);
 
     private final OpenAIService openAIService;
 
@@ -37,7 +41,8 @@ public class TravelController {
             Itinerary itinerary = openAIService.generateItinerary(destination, days, interests);
             itineraryText = itinerary.toPlainText();
         } catch (Exception e) {
-            itineraryText = "Something went wrong: " + e.getMessage();
+            log.error("Could not plan the trip", e);
+            itineraryText = "Something went wrong while planning your trip. Please try again.";
         }
 
         model.addAttribute("itinerary", itineraryText);

@@ -1,6 +1,5 @@
 package com.travel.itinerary;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +34,7 @@ public class TravelController {
     public String generateItinerary(
             @RequestParam String destination,
             @RequestParam int days,
-            @RequestParam String interests,
+            @RequestParam(defaultValue = "") String interests,
             Model model) {
 
         System.out.println("Received request for: " + destination + ", " + days + " days, interests: " + interests);

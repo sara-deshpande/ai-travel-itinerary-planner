@@ -44,23 +44,30 @@
   
   /* ---------- Page ---------- */
   * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
   }
   
   body {
-    margin: 0;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     font-family: "DM Sans", sans-serif;
     line-height: 1.5;
     color: var(--navy);
     background-color: var(--cream);
     background-image:
-      repeating-linear-gradient(0deg, rgba(249, 207, 219, 0.5) 0 24px, transparent 24px 48px),
-      repeating-linear-gradient(90deg, rgba(249, 207, 219, 0.5) 0 24px, transparent 24px 48px);
+      linear-gradient(90deg, rgba(247, 176, 198, 0.15) 50%, transparent 50%),
+      linear-gradient(rgba(237, 140, 166, 0.10) 50%, transparent 50%);
+    background-size: 48px 48px;
+  }
+  
+  main {
+    flex: 1;
   }
   
   h1, h2, h3 {
-    margin: 0;
     font-family: "Titan One", sans-serif;
     font-weight: 400;
   }
@@ -76,33 +83,51 @@
   }
   
   /* ---------- Form fields ---------- */
+  .label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  
   input[type="text"],
   input[type="number"] {
     width: 100%;
-    padding: 12px 14px;
+    padding: 13px 16px;
     font: inherit;
+    font-size: 18px;
+    font-weight: 700;
     color: var(--navy);
     background: var(--cream);
-    border: 2px solid var(--navy);
-    border-radius: 12px;
+    border: none;
+    border-bottom: 4px solid var(--navy);
+    border-radius: 0;
+  }
+  
+  input::placeholder {
+    color: var(--navy);
+    opacity: 0.45;
   }
   
   .field-error {
-    margin: 6px 0 0;
+    margin-top: 6px;
     padding-left: 10px;
     border-left: 4px solid var(--coral);
+    font-size: 14px;
     font-weight: 700;
   }
   
   /* ---------- Button ---------- */
   .btn {
     display: inline-block;
-    padding: 14px 28px;
-    font: inherit;
-    font-weight: 700;
+    padding: 15px 34px;
+    font-family: "Titan One", sans-serif;
+    font-size: 21px;
     color: var(--navy);
     background: var(--coral);
-    border: 2px solid var(--navy);
+    border: none;
     border-radius: 999px;
     cursor: pointer;
   }
@@ -111,23 +136,281 @@
     background: var(--pink);
   }
   
-  /* ---------- Interest bubbles ---------- */
-  .bubble {
-    padding: 8px 18px;
+  /* ---------- Ticker, top bar, footer ---------- */
+  .ticker {
+    overflow: hidden;
+    padding: 11px 0;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    white-space: nowrap;
+    color: var(--navy);
+    background: var(--coral);
+  }
+  
+  .ticker div {
+    display: inline-block;
+    animation: slide 60s linear infinite;
+  }
+  
+  @keyframes slide {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .ticker div {
+      animation: none;
+    }
+  }
+  
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 56px 0;
+  }
+  
+  .logo {
+    font-family: "Titan One", sans-serif;
+    font-size: 25px;
+    color: var(--navy);
+    text-decoration: none;
+  }
+  
+  .toplink {
+    padding: 0 0 2px;
     font: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy);
+    background: none;
+    border: none;
+    border-bottom: 3px solid var(--navy);
+    cursor: pointer;
+  }
+  
+  .foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    padding: 26px 56px;
+    font-size: 14px;
+    font-weight: 700;
+    background: var(--beige);
+  }
+  
+  .foot .logo {
+    font-size: 22px;
+  }
+  
+  /* ---------- Home page ---------- */
+  .hero {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 24px 70px;
+    text-align: center;
+  }
+  
+  .hero h1 {
+    font-size: clamp(80px, 12.5vw, 150px);
+    line-height: 1;
+  }
+  
+  .coral {
+    color: var(--coral);
+  }
+  
+  .lede {
+    margin: 6px 0 34px;
+    font-size: 21px;
+    font-weight: 700;
+  }
+  
+  .ticket {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto;
+    text-align: left;
+    background: var(--cream);
+  }
+  
+  .ticket-head {
+    padding: 12px 32px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    color: var(--cream);
+    background: var(--navy);
+  }
+  
+  .ticket-body {
+    padding: 24px 36px 30px;
+  }
+  
+  .ticket-row {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 22px;
+  }
+  
+  .ticket-row .wide {
+    flex: 2;
+  }
+  
+  .ticket-row .narrow {
+    flex: 1;
+  }
+  
+  .interests {
+    margin-bottom: 22px;
+    text-align: center;
+    border: none;
+  }
+  
+  .interests legend {
+    width: 100%;
+    margin-bottom: 7px;
+    text-align: center;
+  }
+  
+  .bubbles {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .bubble {
+    position: relative;
+  }
+  
+  .bubble input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  .bubble span {
+    display: inline-block;
+    padding: 9px 19px;
+    font-size: 15px;
     font-weight: 700;
     color: var(--navy);
     background: var(--blue);
-    border: 2px solid var(--navy);
     border-radius: 999px;
     cursor: pointer;
   }
   
-  .bubble:hover {
+  .bubble input:not(:checked) + span:hover {
     background: var(--pink-light);
   }
   
-  .bubble.selected {
+  .bubble input:checked + span {
     color: var(--cream);
     background: var(--navy);
+  }
+  
+  .bubble input:focus-visible + span {
+    outline: 3px solid var(--navy);
+    outline-offset: 3px;
+  }
+  
+  .ticket-actions {
+    text-align: center;
+  }
+  
+  .stk {
+    position: absolute;
+    z-index: 0;
+  }
+  
+  .stk svg {
+    display: block;
+    width: 100%;
+  }
+  
+  .stk-plane    { left: 6%;  top: 150px; width: 120px; transform: rotate(-14deg); }
+  .stk-sun      { right: 5%; top: 120px; width: 120px; transform: rotate(8deg); }
+  .stk-suitcase { left: 5%;  top: 400px; width: 100px; transform: rotate(-8deg); }
+  .stk-palm     { right: 5%; top: 330px; width: 120px; transform: rotate(6deg); }
+  .stk-shell    { left: 9%;  top: 570px; width: 66px;  transform: rotate(12deg); }
+  .stk-globe    { right: 6%; top: 560px; width: 80px;  transform: rotate(-6deg); }
+  
+  /* ---------- How it works window ---------- */
+  .how {
+    width: min(580px, 92vw);
+    margin: auto;
+    padding: 0;
+    color: var(--navy);
+    background: var(--cream);
+    border: none;
+  }
+  
+  .how::backdrop {
+    background: rgba(27, 42, 90, 0.6);
+  }
+  
+  .how-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 22px;
+    color: var(--cream);
+    background: var(--navy);
+  }
+  
+  .how-head h2 {
+    font-size: 26px;
+  }
+  
+  .how-close {
+    padding: 5px 14px;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--cream);
+    background: none;
+    border: 2px solid var(--cream);
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  
+  .how-steps {
+    padding: 10px 28px 26px;
+    list-style: none;
+  }
+  
+  .how-steps li {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 18px 0;
+    border-bottom: 3px dashed var(--navy);
+  }
+  
+  .how-steps li:last-child {
+    border-bottom: none;
+  }
+  
+  .how-num {
+    flex: none;
+    width: 44px;
+    font-family: "Titan One", sans-serif;
+    font-size: 40px;
+    line-height: 1;
+    color: var(--coral);
+  }
+  
+  .how-steps b {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 20px;
   }

@@ -1,142 +1,127 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Your Itinerary</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #fff8f0;
-            min-height: 100vh;
-            padding: 40px 20px;
-        }
-
-        .container {
-            max-width: 720px;
-            margin: 0 auto;
-        }
-
-        .header-card {
-            background: white;
-            border-radius: 24px;
-            padding: 35px 40px;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-            text-align: center;
-            border-top: 5px solid #ff6b6b;
-        }
-
-        .emoji-header {
-            font-size: 48px;
-            margin-bottom: 10px;
-        }
-
-        h1 {
-            font-size: 1.8rem;
-            color: #ff6b6b;
-            margin-bottom: 16px;
-        }
-
-        .trip-details {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .detail-badge {
-            padding: 7px 16px;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 0.88rem;
-        }
-
-        .badge-orange {
-            background: #fff3e0;
-            color: #e67e22;
-            border: 2px solid #feca57;
-        }
-
-        .badge-pink {
-            background: #fef0fb;
-            color: #e056b8;
-            border: 2px solid #ff9ff3;
-        }
-
-        .badge-blue {
-            background: #e8f8fd;
-            color: #0abde3;
-            border: 2px solid #48dbfb;
-        }
-
-        .itinerary-card {
-            background: white;
-            border-radius: 24px;
-            padding: 35px 40px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-            margin-bottom: 20px;
-            border-left: 5px solid #feca57;
-        }
-
-        .itinerary-card h2 {
-            color: #444;
-            margin-bottom: 20px;
-            font-size: 1.2rem;
-        }
-
-        .itinerary-text {
-            white-space: pre-wrap;
-            line-height: 1.9;
-            color: #555;
-            font-size: 0.97rem;
-        }
-
-        .back-btn {
-            display: block;
-            text-align: center;
-            padding: 15px;
-            background: #ff6b6b;
-            color: white;
-            text-decoration: none;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 700;
-            transition: background 0.2s, transform 0.2s;
-        }
-
-        .back-btn:hover {
-            background: #ff5252;
-            transform: translateY(-1px);
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Your trip | Pack Your Bags</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 
-<div class="container">
+<header class="topbar">
+    <a class="logo" th:href="@{/}">Pack Your Bags</a>
+    <a class="toplink" th:href="@{/}">Plan another trip</a>
+</header>
 
-    <div class="header-card">
-        <div class="emoji-header">🗺️</div>
-        <h1 th:text="'Your Trip to ' + ${destination}">Your Itinerary</h1>
-        <div class="trip-details">
-            <span class="detail-badge badge-orange" th:text="${days} + ' Days'">Days</span>
-            <span class="detail-badge badge-pink" th:text="${interests}">Interests</span>
-            <span class="detail-badge badge-blue">AI Generated ✨</span>
+<main th:if="${itinerary != null}">
+
+    <section class="banner">
+        <div class="banner-text">
+            <p class="script cap">your trip to</p>
+            <h1 th:text="${#strings.trim(#strings.substringBefore(itinerary.destination() + ',', ','))}">Miami</h1>
+            <p class="facts">
+                <span th:text="${days} + (${days} == 1 ? ' day' : ' days')">3 days</span>
+                <span th:if="${!#strings.isEmpty(interests)}">
+                    &nbsp;&bull;&nbsp;<span th:text="${#strings.replace(interests, ',', ', ')}">Food, Beach</span>
+                </span>
+            </p>
         </div>
+
+        <div class="stamp" aria-hidden="true">
+            <svg viewBox="0 0 200 200">
+                <defs><path id="stamp-circle" d="M100,100 m-72,0 a72,72 0 1,1 144,0 a72,72 0 1,1 -144,0"/></defs>
+                <circle cx="100" cy="100" r="94" fill="none" stroke="#FF6B5B" stroke-width="7"/>
+                <circle cx="100" cy="100" r="52" fill="none" stroke="#FF6B5B" stroke-width="4"/>
+                <text font-family="Titan One" font-size="24" fill="#FF6B5B"><textPath href="#stamp-circle" startOffset="0" textLength="440" lengthAdjust="spacing">BON VOYAGE * BON VOYAGE *</textPath></text>
+                <text x="100" y="112" text-anchor="middle" font-family="Titan One" font-size="30" fill="#FF6B5B"
+                      th:text="${days} + (${days} == 1 ? ' DAY' : ' DAYS')">3 DAYS</text>
+            </svg>
+        </div>
+
+        <div class="stk stk-sun-small" aria-hidden="true"><svg viewBox="0 0 100 100"><g stroke="#FF6B5B" stroke-width="6" stroke-linecap="round"><line x1="50" y1="50" x2="95" y2="50"/><line x1="50" y1="50" x2="89" y2="72.5"/><line x1="50" y1="50" x2="72.5" y2="89"/><line x1="50" y1="50" x2="50" y2="95"/><line x1="50" y1="50" x2="27.5" y2="89"/><line x1="50" y1="50" x2="11" y2="72.5"/><line x1="50" y1="50" x2="5" y2="50"/><line x1="50" y1="50" x2="11" y2="27.5"/><line x1="50" y1="50" x2="27.5" y2="11"/><line x1="50" y1="50" x2="50" y2="5"/><line x1="50" y1="50" x2="72.5" y2="11"/><line x1="50" y1="50" x2="89" y2="27.5"/></g><circle cx="50" cy="50" r="24" fill="#FFF9F2" stroke="#FF6B5B" stroke-width="6"/></svg></div>
+    </section>
+
+    <section class="trip">
+        <div class="trip-head">
+            <h2>Your itinerary</h2>
+            <p>Tap a day to open it.</p>
+        </div>
+
+        <div class="days">
+            <details class="day" th:each="day, stat : ${itinerary.days()}"
+                     th:classappend="${'c' + (stat.index % 4 + 1)}">
+                <summary>
+                    <span class="day-num" th:text="${'DAY ' + stat.count}">DAY 1</span>
+                    <span class="day-title" th:text="${day.title()}">Day title</span>
+                    <span class="plus" aria-hidden="true"></span>
+                </summary>
+
+                <div class="day-body">
+
+                    <div class="tod">
+                        <div class="tod-label">
+                            <svg viewBox="0 0 100 100" aria-hidden="true"><path d="M10 70 A40 40 0 0 1 90 70Z" fill="#FF6B5B" stroke="#1B2A5A" stroke-width="6" stroke-linejoin="round"/><line x1="4" y1="70" x2="96" y2="70" stroke="#1B2A5A" stroke-width="6"/><g stroke="#1B2A5A" stroke-width="6" stroke-linecap="round"><line x1="50" y1="14" x2="50" y2="24"/><line x1="14" y1="30" x2="22" y2="36"/><line x1="86" y1="30" x2="78" y2="36"/></g></svg>
+                            <b>MORNING</b>
+                        </div>
+                        <ul>
+                            <li th:each="item : ${day.morning()}" th:text="${item}">Morning item</li>
+                        </ul>
+                    </div>
+
+                    <div class="tod">
+                        <div class="tod-label">
+                            <svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="22" fill="#FFF9F2" stroke="#1B2A5A" stroke-width="6"/><g stroke="#1B2A5A" stroke-width="6" stroke-linecap="round"><line x1="82" y1="50" x2="94" y2="50"/><line x1="72.6" y1="72.6" x2="81.1" y2="81.1"/><line x1="50" y1="82" x2="50" y2="94"/><line x1="27.4" y1="72.6" x2="18.9" y2="81.1"/><line x1="18" y1="50" x2="6" y2="50"/><line x1="27.4" y1="27.4" x2="18.9" y2="18.9"/><line x1="50" y1="18" x2="50" y2="6"/><line x1="72.6" y1="27.4" x2="81.1" y2="18.9"/></g></svg>
+                            <b>AFTERNOON</b>
+                        </div>
+                        <ul>
+                            <li th:each="item : ${day.afternoon()}" th:text="${item}">Afternoon item</li>
+                        </ul>
+                    </div>
+
+                    <div class="tod tod-last">
+                        <div class="tod-label">
+                            <svg viewBox="0 0 100 100" aria-hidden="true"><path d="M62 12 A40 40 0 1 0 90 62 A32 32 0 1 1 62 12Z" fill="#FFF9F2" stroke="#1B2A5A" stroke-width="6" stroke-linejoin="round"/></svg>
+                            <b>EVENING</b>
+                        </div>
+                        <ul>
+                            <li th:each="item : ${day.evening()}" th:text="${item}">Evening item</li>
+                        </ul>
+                    </div>
+
+                    <div class="two">
+                        <div class="box box-tips">
+                            <h3>Good to know</h3>
+                            <ol>
+                                <li th:each="tip : ${day.tips()}" th:text="${tip}">Tip</li>
+                            </ol>
+                        </div>
+                        <div class="box box-eat">
+                            <h3>Where to eat</h3>
+                            <div class="eat-row" th:each="place : ${day.restaurants()}">
+                                <span class="meal" th:text="${place.meal()}">Lunch</span>
+                                <span class="place" th:text="${place.name()}">Restaurant</span>
+                                <span class="eat-note" th:text="${place.note()}">A short note</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </details>
+        </div>
+    </section>
+
+    <div class="endrow">
+        <a class="btn" th:href="@{/}">Plan another trip</a>
+        <p>Plans are suggestions. Check opening hours before you go.</p>
     </div>
 
-    <div class="itinerary-card">
-        <h2>📋 Your Personalized Itinerary</h2>
-        <div class="itinerary-text" th:text="${itinerary}"></div>
-    </div>
+</main>
 
-    <a href="/" class="back-btn">✈️ Plan Another Trip</a>
-
-</div>
+<main class="notice" th:unless="${itinerary != null}">
+    <h1>Hmm, that did not work.</h1>
+    <p th:text="${error}">Something went wrong. Please try again.</p>
+    <a class="btn" th:href="@{/}">Back to start</a>
+</main>
 
 </body>
 </html>

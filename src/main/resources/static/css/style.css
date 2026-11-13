@@ -136,34 +136,6 @@
     background: var(--pink);
   }
   
-  /* ---------- Ticker, top bar, footer ---------- */
-  .ticker {
-    overflow: hidden;
-    padding: 11px 0;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    white-space: nowrap;
-    color: var(--navy);
-    background: var(--coral);
-  }
-  
-  .ticker div {
-    display: inline-block;
-    animation: slide 60s linear infinite;
-  }
-  
-  @keyframes slide {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-  
-  @media (prefers-reduced-motion: reduce) {
-    .ticker div {
-      animation: none;
-    }
-  }
-  
   .topbar {
     display: flex;
     justify-content: space-between;

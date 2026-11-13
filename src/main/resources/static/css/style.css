@@ -386,3 +386,345 @@
     margin-bottom: 4px;
     font-size: 20px;
   }
+
+  /* ---------- Results page ---------- */
+:root {
+  --blue-light: #D5EAF9;
+}
+
+.btn,
+.toplink {
+  text-decoration: none;
+}
+
+.banner {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 36px 56px 28px;
+}
+
+.banner-text {
+  position: relative;
+  z-index: 1;
+  max-width: calc(100% - 330px);
+}
+
+.banner .cap {
+  display: inline-block;
+  font-size: 36px;
+  line-height: 1.2;
+  color: var(--coral);
+  transform: rotate(-3deg);
+}
+
+.banner h1 {
+  font-size: clamp(72px, 12.5vw, 150px);
+  line-height: 0.95;
+  overflow-wrap: anywhere;
+}
+
+.facts {
+  margin-top: 10px;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.stamp {
+  position: absolute;
+  top: 30px;
+  right: 90px;
+  width: 230px;
+  transform: rotate(10deg);
+}
+
+.stamp svg {
+  display: block;
+  width: 100%;
+}
+
+.stk-sun-small {
+  top: 90px;
+  left: 58%;
+  width: 80px;
+  transform: rotate(8deg);
+}
+
+.trip {
+  width: calc(100% - 112px);
+  max-width: 1088px;
+  margin: 0 auto;
+  padding: 30px 34px 34px;
+  background: var(--beige);
+}
+
+.trip-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 22px;
+}
+
+.trip-head h2 {
+  font-size: 34px;
+}
+
+.trip-head p {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.days {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.day {
+  flex: 1 1 calc(50% - 8px);
+  min-width: 0;
+}
+
+.day[open] {
+  flex-basis: 100%;
+  background: var(--cream);
+}
+
+.c1 { background: var(--pink); }
+.c2 { background: var(--blue); }
+.c3 { background: var(--cream); }
+.c4 { background: var(--coral); }
+
+.day summary {
+  display: block;
+  position: relative;
+  min-height: 110px;
+  padding: 20px 70px 20px 24px;
+  list-style: none;
+  cursor: pointer;
+}
+
+.day summary::-webkit-details-marker {
+  display: none;
+}
+
+.day summary:focus-visible {
+  outline: 3px solid var(--navy);
+  outline-offset: -6px;
+}
+
+.day-num {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
+.day-title {
+  display: block;
+  margin-top: 6px;
+  font-family: "Titan One", sans-serif;
+  font-size: 27px;
+  line-height: 1.1;
+}
+
+.plus {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 34px;
+  height: 34px;
+  background: var(--navy);
+}
+
+.plus::before,
+.plus::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: var(--cream);
+}
+
+.plus::before {
+  width: 16px;
+  height: 4px;
+  margin: -2px 0 0 -8px;
+}
+
+.plus::after {
+  width: 4px;
+  height: 16px;
+  margin: -8px 0 0 -2px;
+}
+
+.day[open] summary {
+  color: var(--cream);
+  background: var(--navy);
+}
+
+.day[open] summary:focus-visible {
+  outline-color: var(--cream);
+}
+
+.day[open] .day-title {
+  font-size: 34px;
+}
+
+.day[open] .plus {
+  background: var(--cream);
+}
+
+.day[open] .plus::before {
+  background: var(--navy);
+}
+
+.day[open] .plus::after {
+  display: none;
+}
+
+.day-body {
+  padding: 6px 28px 26px;
+}
+
+.tod {
+  display: flex;
+  gap: 22px;
+  padding: 18px 0;
+  border-bottom: 3px dashed var(--navy);
+}
+
+.tod-last {
+  border-bottom: none;
+}
+
+.tod-label {
+  flex: none;
+  width: 128px;
+}
+
+.tod-label svg {
+  display: block;
+  width: 42px;
+  margin-bottom: 6px;
+}
+
+.tod-label b {
+  font-size: 12px;
+  letter-spacing: 0.16em;
+}
+
+.tod ul {
+  flex: 1;
+  list-style: none;
+}
+
+.tod li {
+  position: relative;
+  padding: 3px 0 3px 22px;
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.tod li::before {
+  content: "";
+  position: absolute;
+  top: 13px;
+  left: 0;
+  width: 9px;
+  height: 9px;
+  background: var(--coral);
+}
+
+.two {
+  display: flex;
+  gap: 16px;
+  margin-top: 22px;
+}
+
+.two .box {
+  flex: 1;
+  padding: 20px 24px;
+}
+
+.box-tips {
+  background: var(--pink-light);
+}
+
+.box-eat {
+  background: var(--blue-light);
+}
+
+.two h3 {
+  margin-bottom: 10px;
+  font-size: 24px;
+}
+
+.two ol {
+  padding-left: 22px;
+}
+
+.two ol li {
+  padding: 3px 0;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.eat-row {
+  margin-bottom: 12px;
+}
+
+.meal {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.place {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.eat-note {
+  display: block;
+  font-size: 14px;
+}
+
+.endrow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 56px 40px;
+}
+
+.endrow p {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.notice {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 90px 24px;
+  text-align: center;
+}
+
+.notice h1 {
+  margin-bottom: 14px;
+  font-size: 64px;
+  line-height: 1.05;
+}
+
+.notice p {
+  margin-bottom: 30px;
+  font-size: 20px;
+  font-weight: 700;
+}

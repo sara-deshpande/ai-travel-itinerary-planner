@@ -1,204 +1,107 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>AI Travel Itinerary Builder</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #fff8f0;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .container {
-            background: white;
-            border-radius: 24px;
-            padding: 45px 40px;
-            max-width: 580px;
-            width: 100%;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-            border-top: 5px solid #ff6b6b;
-        }
-
-        .emoji-header {
-            font-size: 48px;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        h1 {
-            text-align: center;
-            font-size: 1.8rem;
-            color: #ff6b6b;
-            margin-bottom: 6px;
-        }
-
-        .subtitle {
-            text-align: center;
-            color: #aaa;
-            margin-bottom: 32px;
-            font-size: 0.95rem;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: #444;
-            font-size: 0.95rem;
-        }
-
-        input[type="text"],
-        input[type="number"] {
-            width: 100%;
-            padding: 13px 16px;
-            border: 2px solid #f0f0f0;
-            border-radius: 12px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-            outline: none;
-            color: #333;
-            background: #fafafa;
-        }
-
-        input[type="text"]:focus,
-        input[type="number"]:focus {
-            border-color: #ff6b6b;
-            background: white;
-        }
-
-        .interests-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-top: 8px;
-        }
-
-        .interest-chip {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px 8px;
-            border: 2px solid #f0f0f0;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #666;
-            transition: all 0.2s;
-            background: #fafafa;
-            text-align: center;
-        }
-
-        .interest-chip:hover {
-            border-color: #feca57;
-            background: #fffdf0;
-        }
-
-        .interest-chip.selected {
-            border-color: #ff6b6b;
-            background: #fff5f5;
-            color: #ff6b6b;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 15px;
-            background: #ff6b6b;
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            margin-top: 12px;
-            transition: background 0.2s, transform 0.2s;
-            letter-spacing: 0.3px;
-        }
-
-        .submit-btn:hover {
-            background: #ff5252;
-            transform: translateY(-1px);
-        }
-
-        .submit-btn:active {
-            transform: translateY(0);
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pack Your Bags</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 
-<div class="container">
-    <div class="emoji-header">✈️</div>
-    <h1>AI Travel Planner</h1>
-    <p class="subtitle">Tell us your dream trip and we'll plan it for you!</p>
-
-    <form action="/generate" method="post" onsubmit="collectInterests()">
-
-        <div class="form-group">
-            <label>📍 Destination</label>
-            <input type="text" name="destination" th:value="${destination}" placeholder="e.g. Paris, Tokyo, New York..." required />
-            <p th:if="${errors != null and errors.containsKey('destination')}"
-               th:text="${errors['destination']}"></p>
-        </div>
-
-        <div class="form-group">
-            <label>📅 Number of Days</label>
-            <input type="number" name="days" min="1" max="14" th:value="${days} ?: 3" required />
-            <p th:if="${errors != null and errors.containsKey('days')}"
-               th:text="${errors['days']}"></p>
-        </div>
-
-        <div class="form-group">
-            <label>🎯 Your Interests</label>
-            <div class="interests-grid">
-                <div class="interest-chip" onclick="toggleChip(this, '🍜 Food')">🍜 Food</div>
-                <div class="interest-chip" onclick="toggleChip(this, '🏛️ Culture')">🏛️ Culture</div>
-                <div class="interest-chip" onclick="toggleChip(this, '🏔️ Adventure')">🏔️ Adventure</div>
-                <div class="interest-chip" onclick="toggleChip(this, '🛍️ Shopping')">🛍️ Shopping</div>
-                <div class="interest-chip" onclick="toggleChip(this, '🎵 Nightlife')">🎵 Nightlife</div>
-                <div class="interest-chip" onclick="toggleChip(this, '🏖️ Beach')">🏖️ Beach</div>
-                <div class="interest-chip" onclick="toggleChip(this, '📸 Photography')">📸 Photography</div>
-                <div class="interest-chip" onclick="toggleChip(this, '🌿 Nature')">🌿 Nature</div>
-                <div class="interest-chip" onclick="toggleChip(this, '🏛️ Museums')">🏛️ Museums</div>
-            </div>
-            <input type="hidden" name="interests" id="interestsInput" />
-        </div>
-
-        <button type="submit" class="submit-btn">🗺️ Generate My Itinerary</button>
-
-    </form>
+<div class="ticker" aria-hidden="true">
+    <div>ALWAYS SUNNY &nbsp;&bull;&nbsp; ALWAYS PACKED &nbsp;&bull;&nbsp; ALWAYS PLANNED &nbsp;&bull;&nbsp; ALWAYS SUNNY &nbsp;&bull;&nbsp; ALWAYS PACKED &nbsp;&bull;&nbsp; ALWAYS PLANNED &nbsp;&bull;&nbsp; ALWAYS SUNNY &nbsp;&bull;&nbsp; ALWAYS PACKED &nbsp;&bull;&nbsp; ALWAYS PLANNED &nbsp;&bull;&nbsp; ALWAYS SUNNY &nbsp;&bull;&nbsp; ALWAYS PACKED &nbsp;&bull;&nbsp; ALWAYS PLANNED &nbsp;&bull;&nbsp; ALWAYS SUNNY &nbsp;&bull;&nbsp; ALWAYS PACKED &nbsp;&bull;&nbsp; ALWAYS PLANNED &nbsp;&bull;&nbsp; ALWAYS SUNNY &nbsp;&bull;&nbsp; ALWAYS PACKED &nbsp;&bull;&nbsp; ALWAYS PLANNED &nbsp;&bull;&nbsp;</div>
 </div>
 
+<header class="topbar">
+    <a class="logo" th:href="@{/}">Pack Your Bags</a>
+    <button type="button" class="toplink" id="open-how">How it works</button>
+</header>
+
+<main class="hero">
+    <h1>Where <span class="coral">to?</span></h1>
+    <p class="lede">Tell us the basics and we will plan every day of your trip.</p>
+
+    <form class="ticket" action="/generate" method="post">
+        <div class="ticket-head">BOARDING PASS</div>
+        <div class="ticket-body">
+
+            <div class="ticket-row">
+                <div class="wide">
+                    <label class="label" for="destination">Destination</label>
+                    <input type="text" id="destination" name="destination" th:value="${destination}"
+                           placeholder="e.g. Miami, Florida" required />
+                    <p class="field-error" th:if="${errors != null and errors.containsKey('destination')}"
+                       th:text="${errors['destination']}"></p>
+                </div>
+                <div class="narrow">
+                    <label class="label" for="days">Days</label>
+                    <input type="number" id="days" name="days" min="1" max="14" th:value="${days} ?: 3" required />
+                    <p class="field-error" th:if="${errors != null and errors.containsKey('days')}"
+                       th:text="${errors['days']}"></p>
+                </div>
+            </div>
+
+            <fieldset class="interests">
+                <legend class="label">Interests (optional)</legend>
+                <div class="bubbles">
+                    <label class="bubble" th:each="name : ${ {'Beach','Nightlife','Food','Adventure','Culture','Shopping','Nature'} }">
+                        <input type="checkbox" name="interests" th:value="${name}"
+                               th:checked="${interests != null and #strings.contains(interests, name)}" />
+                        <span th:text="${name}">Beach</span>
+                    </label>
+                </div>
+            </fieldset>
+
+            <div class="ticket-actions">
+                <button type="submit" class="btn">Plan my trip</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="stk stk-plane" aria-hidden="true"><svg viewBox="0 0 100 100"><path d="M8 56 L94 20 L68 86 L50 62 L34 72 L36 52Z" fill="#FFF9F2" stroke="#1B2A5A" stroke-width="5" stroke-linejoin="round"/><path d="M36 52 L94 20" stroke="#1B2A5A" stroke-width="4"/></svg></div>
+
+    <div class="stk stk-sun" aria-hidden="true"><svg viewBox="0 0 100 100"><g stroke="#FF6B5B" stroke-width="6" stroke-linecap="round"><line x1="50" y1="50" x2="95" y2="50"/><line x1="50" y1="50" x2="89" y2="72.5"/><line x1="50" y1="50" x2="72.5" y2="89"/><line x1="50" y1="50" x2="50" y2="95"/><line x1="50" y1="50" x2="27.5" y2="89"/><line x1="50" y1="50" x2="11" y2="72.5"/><line x1="50" y1="50" x2="5" y2="50"/><line x1="50" y1="50" x2="11" y2="27.5"/><line x1="50" y1="50" x2="27.5" y2="11"/><line x1="50" y1="50" x2="50" y2="5"/><line x1="50" y1="50" x2="72.5" y2="11"/><line x1="50" y1="50" x2="89" y2="27.5"/></g><circle cx="50" cy="50" r="24" fill="#FFF9F2" stroke="#FF6B5B" stroke-width="6"/></svg></div>
+
+    <div class="stk stk-suitcase" aria-hidden="true"><svg viewBox="0 0 100 100"><rect x="12" y="30" width="76" height="58" fill="#EE8FA8" stroke="#1B2A5A" stroke-width="5"/><path d="M36 30 V18 H64 V30" fill="none" stroke="#1B2A5A" stroke-width="5"/><rect x="30" y="30" width="6" height="58" fill="#1B2A5A"/><rect x="64" y="30" width="6" height="58" fill="#1B2A5A"/></svg></div>
+
+    <div class="stk stk-palm" aria-hidden="true"><svg viewBox="0 0 100 100"><path d="M46 94 C44 70 50 52 58 38" stroke="#1B2A5A" stroke-width="7" fill="none" stroke-linecap="round"/><g stroke="#1B2A5A" stroke-width="4" stroke-linejoin="round"><path d="M58 38 C40 26 22 30 12 44 C30 38 44 38 58 38Z" fill="#A9D3F2"/><path d="M58 38 C70 20 90 18 96 32 C80 28 68 32 58 38Z" fill="#D5EAF9"/><path d="M58 38 C54 22 40 10 26 10 C40 18 50 26 58 38Z" fill="#A9D3F2"/><path d="M58 38 C74 40 88 52 88 66 C78 52 68 46 58 38Z" fill="#D5EAF9"/></g></svg></div>
+
+    <div class="stk stk-shell" aria-hidden="true"><svg viewBox="0 0 100 100"><path d="M50 12 C84 22 92 62 72 86 H28 C8 62 16 22 50 12Z" fill="#A9D3F2" stroke="#1B2A5A" stroke-width="5"/><g stroke="#1B2A5A" stroke-width="4" stroke-linecap="round"><line x1="50" y1="86" x2="50" y2="24"/><line x1="50" y1="86" x2="29" y2="32"/><line x1="50" y1="86" x2="71" y2="32"/></g></svg></div>
+
+    <div class="stk stk-globe" aria-hidden="true"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="38" fill="#A9D3F2" stroke="#1B2A5A" stroke-width="5"/><ellipse cx="50" cy="50" rx="16" ry="38" fill="none" stroke="#1B2A5A" stroke-width="4"/><line x1="12" y1="50" x2="88" y2="50" stroke="#1B2A5A" stroke-width="4"/><path d="M18 30 H82 M18 70 H82" stroke="#1B2A5A" stroke-width="3" fill="none"/><rect x="40" y="86" width="20" height="6" fill="#1B2A5A"/></svg></div>
+</main>
+
+<footer class="foot">
+    <span class="logo">Pack Your Bags</span>
+    <span>A learning project. Double check opening hours before you go.</span>
+    <span>Made by Sara</span>
+</footer>
+
+<dialog id="how-dialog" class="how">
+    <div class="how-head">
+        <h2>How it works</h2>
+        <button type="button" class="how-close" id="close-how">Close</button>
+    </div>
+    <ol class="how-steps">
+        <li>
+            <span class="how-num">1</span>
+            <div><b>Pick a place</b>Type in where you are headed and how many days you have.</div>
+        </li>
+        <li>
+            <span class="how-num">2</span>
+            <div><b>Set the vibe</b>Choose the things you like, such as beaches, food or nightlife.</div>
+        </li>
+        <li>
+            <span class="how-num">3</span>
+            <div><b>Get your plan</b>You get one box per day. Tap a day to see the morning, afternoon, evening, tips and places to eat.</div>
+        </li>
+    </ol>
+</dialog>
+
 <script>
-    let selectedInterests = [];
-
-    function toggleChip(chip, value) {
-        if (chip.classList.contains('selected')) {
-            chip.classList.remove('selected');
-            selectedInterests = selectedInterests.filter(i => i !== value);
-        } else {
-            chip.classList.add('selected');
-            selectedInterests.push(value);
-        }
-    }
-
-    function collectInterests() {
-        document.getElementById('interestsInput').value = selectedInterests.join(', ');
-    }
+    const dialog = document.getElementById('how-dialog');
+    document.getElementById('open-how').addEventListener('click', () => dialog.showModal());
+    document.getElementById('close-how').addEventListener('click', () => dialog.close());
 </script>
 
 </body>

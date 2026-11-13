@@ -40,7 +40,7 @@
             <fieldset class="interests">
                 <legend class="label">Interests (optional)</legend>
                 <div class="bubbles">
-                    <label class="bubble" th:each="name : ${ {'Beach','Nightlife','Food','Adventure','Culture','Shopping','Nature'} }">
+                    <label class="bubble" th:each="name : ${ {'Beach','Nightlife','Food','Adventure','Culture','Shopping','Nature','Museums','History','Art','Hiking','Photography','Coffee','Live music','Markets','Wellness','Wildlife','Architecture','Romantic','Family','Hidden gems'} }">
                         <input type="checkbox" name="interests" th:value="${name}"
                                th:checked="${interests != null and #strings.contains(interests, name)}" />
                         <span th:text="${name}">Beach</span>

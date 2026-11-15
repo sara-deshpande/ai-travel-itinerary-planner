@@ -94,10 +94,56 @@
     </ol>
 </dialog>
 
+<div class="loading" id="loading" role="status" aria-live="polite">
+    <div class="loading-top">
+        <span class="logo">Pack Your Bags</span>
+    </div>
+
+    <div class="loading-head">
+        <h1>Packing your <span class="coral">plan.</span></h1>
+        <p class="script loading-note">this takes about 20 seconds</p>
+    </div>
+
+    <div class="loading-art" aria-hidden="true">
+        <svg class="loading-path" viewBox="0 0 800 160"><path d="M10 140 C200 -40 600 -40 790 140" fill="none" stroke="#1B2A5A" stroke-width="5" stroke-dasharray="4 16" stroke-linecap="round"/></svg>
+        <div class="stk stk-l-plane"><svg viewBox="0 0 100 100"><path d="M8 56 L94 20 L68 86 L50 62 L34 72 L36 52Z" fill="#FFF9F2" stroke="#1B2A5A" stroke-width="5" stroke-linejoin="round"/><path d="M36 52 L94 20" stroke="#1B2A5A" stroke-width="4"/></svg></div>
+        <div class="stk stk-l-case"><svg viewBox="0 0 100 100"><rect x="12" y="30" width="76" height="58" fill="#EE8FA8" stroke="#1B2A5A" stroke-width="5"/><path d="M36 30 V18 H64 V30" fill="none" stroke="#1B2A5A" stroke-width="5"/><rect x="30" y="30" width="6" height="58" fill="#1B2A5A"/><rect x="64" y="30" width="6" height="58" fill="#1B2A5A"/></svg></div>
+        <div class="stk stk-l-globe"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="38" fill="#A9D3F2" stroke="#1B2A5A" stroke-width="5"/><ellipse cx="50" cy="50" rx="16" ry="38" fill="none" stroke="#1B2A5A" stroke-width="4"/><line x1="12" y1="50" x2="88" y2="50" stroke="#1B2A5A" stroke-width="4"/><path d="M18 30 H82 M18 70 H82" stroke="#1B2A5A" stroke-width="3" fill="none"/><rect x="40" y="86" width="20" height="6" fill="#1B2A5A"/></svg></div>
+    </div>
+
+    <div class="skeleton" aria-hidden="true">
+        <div class="skeleton-bar"></div>
+        <div class="skeleton-grid">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+
 <script>
     const dialog = document.getElementById('how-dialog');
     document.getElementById('open-how').addEventListener('click', () => dialog.showModal());
     document.getElementById('close-how').addEventListener('click', () => dialog.close());
+
+    const form = document.getElementById('trip-form');
+    const planButton = document.getElementById('plan-btn');
+    const loading = document.getElementById('loading');
+
+    form.addEventListener('submit', () => {
+        planButton.disabled = true;
+        loading.classList.add('show');
+    });
+
+    window.addEventListener('pageshow', (event) => {
+        if (event.persisted) {
+            planButton.disabled = false;
+            loading.classList.remove('show');
+        }
+    });
 </script>
 
 </body>

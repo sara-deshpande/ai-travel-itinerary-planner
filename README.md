@@ -4,6 +4,8 @@ An AI travel planner built with Java and Spring Boot. Enter a destination, a num
 
 The interesting part is not the chat call, it is everything around it. The model is forced to answer in a strict JSON schema, the response is parsed into typed Java records, user input is validated and checked against a real place database before any tokens are spent, and failures are handled so the user always gets a clear next step.
 
+**Live demo:** https://ai-travel-itinerary-planner-production.up.railway.app
+
 ![Home page](docs/screenshots/home.png)
 
 ![Results page with a day opened](docs/screenshots/results.png)

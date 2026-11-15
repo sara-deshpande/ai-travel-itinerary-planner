@@ -728,3 +728,114 @@
   font-size: 20px;
   font-weight: 700;
 }
+
+/* ---------- Loading screen ---------- */
+.btn:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+.loading {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  overflow: auto;
+  background-color: var(--cream);
+  background-image:
+    linear-gradient(90deg, rgba(247, 176, 198, 0.15) 50%, transparent 50%),
+    linear-gradient(rgba(237, 140, 166, 0.10) 50%, transparent 50%);
+  background-size: 48px 48px;
+}
+
+.loading.show {
+  display: block;
+}
+
+.loading-top {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 56px 0;
+}
+
+.loading-head {
+  padding-top: 50px;
+  text-align: center;
+}
+
+.loading-head h1 {
+  font-size: clamp(44px, 6.5vw, 76px);
+  line-height: 1.1;
+}
+
+.loading-note {
+  margin-top: 6px;
+  font-size: 36px;
+  color: var(--coral);
+}
+
+.loading-art {
+  position: relative;
+  width: min(800px, 92%);
+  height: 200px;
+  margin: 30px auto 0;
+}
+
+.loading-path {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.stk-l-plane { left: 45%;   top: -4px;  width: 84px; transform: rotate(8deg); }
+.stk-l-case  { left: -4%;   top: 112px; width: 70px; transform: rotate(-8deg); }
+.stk-l-globe { right: -4%;  top: 112px; width: 70px; transform: rotate(6deg); }
+
+.skeleton {
+  width: calc(100% - 112px);
+  max-width: 1088px;
+  margin: 50px auto 40px;
+  padding: 30px 34px 34px;
+  background: var(--beige);
+}
+
+.skeleton-bar {
+  width: 260px;
+  max-width: 60%;
+  height: 30px;
+  margin-bottom: 20px;
+  background: #E4D2B8;
+}
+
+.skeleton-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.skeleton-grid div {
+  position: relative;
+  height: 128px;
+  overflow: hidden;
+  background: #E9D9C1;
+}
+
+.skeleton-grid div::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 249, 242, 0.7), transparent);
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-grid div::after {
+    display: none;
+  }
+}

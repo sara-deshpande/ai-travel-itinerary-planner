@@ -56,18 +56,18 @@ public class TravelController {
             return "index";
         }
         
-        try {
-            Itinerary itinerary = openAIService.generateItinerary(destination, days, interests);
-            model.addAttribute("itinerary", itinerary);
-        } catch (Exception e) {
-            log.error("Could not plan the trip", e);
-            model.addAttribute("error", "Something went wrong while planning your trip. Please try again.");
-        }
-
         model.addAttribute("destination", destination);
         model.addAttribute("days", days);
         model.addAttribute("interests", interests);
 
-        return "result";
+        try {
+            Itinerary itinerary = openAIService.generateItinerary(destination, days, interests);
+            model.addAttribute("itinerary", itinerary);
+            return "result";
+        } catch (Exception e) {
+            log.error("Could not plan the trip", e);
+            model.addAttribute("plannerError", "We could not reach the planner. Try again in a minute.");
+            return "index";
+        }
     }
 }

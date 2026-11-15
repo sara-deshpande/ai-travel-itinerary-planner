@@ -30,7 +30,7 @@ public class PlaceChecker {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .timeout(Duration.ofSeconds(5))
-                .header("User-Agent", "ai-travel-itinerary-planner (student project)")
+                .header("User-Agent", "PackYourBags/1.0 (https://github.com/sara-deshpande/ai-travel-itinerary-planner)")
                 .build();
 
         try {

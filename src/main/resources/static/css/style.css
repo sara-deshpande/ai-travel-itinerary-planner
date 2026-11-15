@@ -839,3 +839,14 @@
     display: none;
   }
 }
+
+/* ---------- Error banner ---------- */
+.alert {
+  margin-top: 20px;
+  padding: 14px 56px;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  color: var(--cream);
+  background: var(--navy);
+}

@@ -13,6 +13,11 @@
     <button type="button" class="toplink" id="open-how">How it works</button>
 </header>
 
+
+<div class="alert" role="alert" th:if="${plannerError != null}" th:text="${plannerError}">
+    We could not reach the planner. Try again in a minute.
+</div>
+
 <main class="hero">
     <h1>Where <span class="coral">to?</span></h1>
     <p class="lede">Tell us the basics and we will plan every day of your trip.</p>

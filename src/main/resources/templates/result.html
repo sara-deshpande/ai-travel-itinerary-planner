@@ -116,12 +116,5 @@
     </div>
 
 </main>
-
-<main class="notice" th:unless="${itinerary != null}">
-    <h1>Hmm, that did not work.</h1>
-    <p th:text="${error}">Something went wrong. Please try again.</p>
-    <a class="btn" th:href="@{/}">Back to start</a>
-</main>
-
 </body>
 </html>
